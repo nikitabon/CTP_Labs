@@ -28,6 +28,7 @@ void fill_struct(scan_info scaners[]);
 void show_struct(scan_info scaners[]);
 void write_struct(scan_info scaners[]);
 int read_struct(scan_info scaners[]);
+bool is_writen = false;
 
 int main() {
 	scan_info scaners[scaners_number];
@@ -87,9 +88,14 @@ void fill_struct(scan_info scaners[]) {
 		
 		std::cout << '\n';
 	}
+	is_writen = true;
 }
 
 void show_struct(scan_info scaners[]) {
+	if (is_writen == false) {
+		std::cout << "the struct is empty !!!\n";
+		return;
+	}
 	for (int i = 0; i < scaners_number; i++) {
 		std::cout << "Scaner number " << i + 1<< " parameters :";
 		
@@ -162,19 +168,19 @@ int read_struct(scan_info scaners[]) {
 				break;
 			}
 	    }
-	    fscanf(file, "%i", &scaners[i].price);
-	    fscanf(file, "%c");
-	    fscanf(file, "%lf", &scaners[i].x_size);
-	    fscanf(file, "%c");
-	    fscanf(file, "%lf", &scaners[i].y_size);
-	    fscanf(file, "%c");
-	    fscanf(file, "%i", &scaners[i].optr);
-	    fscanf(file, "%c");
-	    fscanf(file, "%i", &scaners[i].grey);
-	    fscanf(file, "%c");
+	    fscanf(file, "%i,", &scaners[i].price);
+	    // fscanf(file, "%c");
+	    fscanf(file, "%lf,", &scaners[i].x_size);
+	    // fscanf(file, "%c");
+	    fscanf(file, "%lf,", &scaners[i].y_size);
+	    // fscanf(file, "%c");
+	    fscanf(file, "%i,", &scaners[i].optr);
+	    // fscanf(file, "%c");
+	    fscanf(file, "%i;", &scaners[i].grey);
+	    // fscanf(file, "%c");
 	}
 	
 	fclose(file);
-	
+	is_writen = true;
 	return 0;
 }

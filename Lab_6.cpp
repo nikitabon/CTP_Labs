@@ -6,21 +6,44 @@
 
 int recursion_func(int * array, int current_position, int finish_position);
 int unrecursion_func(int * array, int current_position, int finish_position);
+int check_for_numbers(char * simbols);
 
 int main()
 {
 	int * array;
 	int array_size;
-	
+	char simbols[20];
+	up:;
 	std::cout << "How many elements the array should store ? : ";
-	std::cin >> array_size;
+	std::cin >> simbols;
+	
+	array_size = check_for_numbers(simbols);
+	
+	if (array_size == 0) {
+		std::cout << "Wrong number !!!\n";
+		goto up;
+	}
 	
 	array = new int[array_size];
 	
 	for (int i = 0; i < array_size; i++)
-	{
+	{		
+		up_to:;
 		std::cout << "Enter " << i + 1 << " element : ";
-		std::cin >> array[i]; 
+		std::cin >> simbols; 
+		
+		for (int i = 0; simbols[i]; i++) {
+			if (simbols[i] == '0' || simbols[i] == '1' || simbols[i] == '2' || simbols[i] == '3' || simbols[i] == '4' || simbols[i] == '5' || simbols[i] == '6' || simbols[i] == '7' || simbols[i] == '8' || simbols[i] == '9') {
+				//
+			}
+			else {
+				std::cout << "Wrong number !!!\n";
+				goto up_to;
+			}
+		}
+		
+		array[i] = atoi(simbols);
+		
 	}
 	
 	std::cout << "The example : (";
@@ -58,4 +81,17 @@ int unrecursion_func(int * array, int current_position, int finish_position)
 		middle_sum += array[current_position];
 	}
 	return middle_sum;
+}
+
+int check_for_numbers(char * simbols) {
+	for (int i = 0; simbols[i]; i++) {
+		if (simbols[i] == '0' || simbols[i] == '1' || simbols[i] == '2' || simbols[i] == '3' || simbols[i] == '4' || simbols[i] == '5' || simbols[i] == '6' || simbols[i] == '7' || simbols[i] == '8' || simbols[i] == '9') {
+			//
+		}
+		else {
+			// std::cout << "Wrong number !!!";
+			return 0;
+		}
+	}
+	return atoi(simbols);
 }

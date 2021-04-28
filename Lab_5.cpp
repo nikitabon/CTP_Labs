@@ -2,7 +2,7 @@
 Варіант 1.
 Як відомо, властивість послідовності чисел Фібоначі: 0, 1, 1, 2, 3, 5, 8, 13, 21, ... полягає у
 тому, що кожне наступне число є сумою двох попередніх.
-Написати функцію fibonacci (n), що обчислює n-не число Фібоначі.
+Написати нерекурсивну функцію fibonacci (n), що обчислює n-не число Фібоначі.
 */
 
 #include<iostream>
@@ -21,6 +21,16 @@ int main()
 	std::cin >> text;
 	
 	fibonacci_number = check_for_numbers(text);
+	
+	if (fibonacci_number < 1) {
+		std::cout << "It's too less numbers, sorry !!!";
+		return 1;
+	}
+	
+	if (fibonacci_number > 20) {
+		std::cout << "It's too many numbers, sorry !!!";
+		return 1;
+	}
 	
 	std::cout << "Fibonacci list : ";
 	fibonacci_number = fibonacci(fibonacci_number);

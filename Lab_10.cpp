@@ -166,6 +166,8 @@ bool operator>(child_class child1, child_class child2) {
 struct list {
 	child_class child;
 	list * next;
+	list * back;
+	int position;
 };
 
 list * Begin;
@@ -175,6 +177,8 @@ list * pointer_for_search;
 int main() {
 	
 	Begin = new list;
+	Begin->position = 0;
+	Begin->back = NULL;
 	pointer = Begin;
 	pointer_for_search = pointer;
 	// student_gradebook gradebook("Ivanov V.V.", "123456");
@@ -197,7 +201,7 @@ int main() {
 	bool value = false;
 	ups:;
 	
-	std::cout << "Menu :\n 0. Exit\n 1. Create new gradebook\n 2. Find in list\n>>> ";
+	std::cout << "Menu :\n 0. Exit\n 1. Create new gradebook\n 2. Find in list\n 3. Show All List\n 4. Remove a node\n>>> ";
 	std::cin >> user_choice;
 	
 	switch (user_choice) {
@@ -213,10 +217,14 @@ int main() {
 			
 			std::cout << "\nData was read successfully\n\n";		
 			
+			std::cout << "\n<-------------POSITION : " << pointer->position << " ------------->\n\n";
+
 			pointer->child.show_all();
 			
 			pointer->next = new list;
 			pointer->next->next = NULL;
+			pointer->next->back = pointer;
+			pointer->next->position = pointer->position + 1;
 			pointer = pointer->next;
 			goto ups;
 			break;
@@ -224,7 +232,7 @@ int main() {
 			std::cout << "Enter an average number to find in the list : ";
 			std::cin >> number;
 
-			std::cout << "Suck objects :\n";
+			std::cout << "Such objects :\n";
 			
 			pointer_for_search = Begin;
 			
@@ -241,6 +249,50 @@ int main() {
 			}
 			goto ups;
 			break;
+		case 3:
+			std::cout << "All List :\n";
+			pointer_for_search = Begin;
+			
+			while (pointer_for_search->next != NULL) {
+				std::cout << "\n<-------------POSITION : " << pointer_for_search->position << " ------------->\n\n";
+				pointer_for_search->child.show_all();
+				value = true;
+				pointer_for_search = pointer_for_search->next;
+			}
+			
+			if (!value) {
+				std::cout << " Nobody !!!\n";
+			}
+			goto ups;
+		case 4:
+			std::cout << "Enter node position to remove : ";
+			std::cin >> number;
+			
+			pointer_for_search = Begin;
+			
+			while (pointer_for_search->next != NULL) {
+				if (pointer_for_search->position == number) {
+					std::cout << "Remove :\n";
+					std::cout << "\n<-------------POSITION : " << pointer_for_search->position << " ------------->\n\n";
+					pointer_for_search->child.show_all();
+					/*
+					std::cout << "\n<-------------POSITION : " << pointer_for_search->back->position << " ------------->\n\n";
+					pointer_for_search->back->child.show_all();
+					std::cout << "\n<-------------POSITION : " << pointer_for_search->next->position << " ------------->\n\n";
+					pointer_for_search->next->next->child.show_all();
+					*/
+					pointer_for_search->back->next = pointer_for_search->next;
+					pointer_for_search->next->back = pointer_for_search->back;
+					value = true;
+					break;
+				}
+				pointer_for_search = pointer_for_search->next;
+			}
+			
+			if (!value) {
+				std::cout << " Nobody !!!\n";
+			}
+			goto ups;
 		default:
 			std::cout << "!!! Wrong number !!!\n";
 			goto ups;
